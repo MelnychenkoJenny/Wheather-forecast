@@ -1,0 +1,5 @@
+#!/bin/sh
+#TODO: to test with windows if it's still needed
+. "$(dirname "$0")/common.sh"
+
+yarn outdated || true

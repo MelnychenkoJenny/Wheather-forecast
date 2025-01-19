@@ -1,0 +1,33 @@
+#!/bin/sh
+
+BUNDLE_PATH=android/app/src/main/assets
+BUNDLE_NAME=index.android.bundle
+APK_PATH=android/app/build/outputs/apk
+
+mkdir ${BUNDLE_PATH}
+
+echo "
+*******************************************
+*                                         *
+*              bundleAndroid              *
+*                                         *
+*******************************************
+"
+
+npx react-native bundle --platform android --dev true --entry-file index.js --bundle-output ${BUNDLE_PATH}/${BUNDLE_NAME}
+
+echo "
+*******************************************
+*                                         *
+*             releaseAndroid              *
+*                                         *
+*******************************************
+"
+
+cd android
+  ./gradlew assembleRelease
+cd -
+
+# open ${APK_PATH}
+
+
