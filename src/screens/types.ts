@@ -16,6 +16,18 @@ export type WeatherMain = {
   grnd_level: number;
 };
 
+interface MainWeather {
+  feels_like: number;
+  grnd_level: number;
+  humidity: number;
+  pressure: number;
+  sea_level: number;
+  temp: number;
+  temp_kf: number;
+  temp_max: number;
+  temp_min: number;
+}
+
 export type WeatherWind = {
   speed: number;
   deg: number;
@@ -60,6 +72,17 @@ export type WeatherResponse = {
   cod: number;
 };
 
+export type Weather = {
+  dt: number;
+  dt_txt: string;
+  main: MainWeather;
+  pop: number;
+  sys: { pod: string };
+  visibility: number;
+  weather: WeatherDescription[];
+  wind: WeatherWind;
+};
+
 export type AddressComponent = {
   long_name: string;
   short_name: string;
@@ -68,4 +91,10 @@ export type AddressComponent = {
 
 export type GeocodingResult = {
   address_components: AddressComponent[];
+};
+
+export type WeatherByDay = {
+  dayOfWeek: string;
+  temp: number;
+  weatherIcon: WeatherCode;
 };
