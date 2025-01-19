@@ -14,7 +14,7 @@ echo "
 *******************************************
 "
 
-npx react-native bundle --platform android --dev true --entry-file index.js --bundle-output ${BUNDLE_PATH}/${BUNDLE_NAME}
+npx react-native bundle --platform android --dev true --entry-file index.js --bundle-output ${BUNDLE_PATH}/${BUNDLE_NAME} --assets-dest android/app/src/main/res/
 
 echo "
 *******************************************
