@@ -12,7 +12,7 @@ import MapView, {
 import { SafeView, StaticText } from '@components';
 import { NavigationProps } from '@navigation';
 import { initialRegion } from '@src/constants';
-import { fetchCityName, fetchDailyWeather } from '@src/network';
+import { fetchCityName, fetchWeather } from '@src/network';
 import { colors } from '@src/styles';
 
 import { MarkerType, WeatherResponse } from './types';
@@ -21,7 +21,7 @@ export const StartScreen = () => {
   const navigation = useNavigation<NavigationProps>();
 
   const [marker, setMarker] = useState<MarkerType>(null);
-  const [city, setCity] = useState<string | null>(null);
+  const [city, setCity] = useState<string>();
   const [weather, setWeather] = useState<WeatherResponse | null>(null);
 
   const markerRef = useRef<MapMarker>(null);
@@ -36,15 +36,15 @@ export const StartScreen = () => {
     const { latitude, longitude } = event.nativeEvent.coordinate;
     setMarker({ latitude, longitude });
 
-    const cityName = await fetchCityName(latitude, longitude);
+    const cityName = (await fetchCityName(latitude, longitude)) as string;
     setCity(cityName);
 
-    const weatherData = await fetchDailyWeather(latitude, longitude);
-    setWeather(weatherData);
+    const weatherData = await fetchWeather(latitude, longitude);
+    setWeather(weatherData[0]);
   };
 
   const handleCalloutPress = () =>
-    marker && navigation.navigate('SearchScreen', marker);
+    marker && navigation.navigate('SearchScreen', { ...marker, city });
 
   return (
     <SafeView>
@@ -56,11 +56,11 @@ export const StartScreen = () => {
         {marker && (
           <Marker ref={markerRef} coordinate={marker}>
             <Callout tooltip onPress={handleCalloutPress}>
-              {city && weather ? (
+              {city && !!weather ? (
                 <View style={calloutContainer}>
                   <Text style={textCityStyle}>{city}</Text>
                   <Text style={textStyle}>
-                    {`Weather: ${Math.round(weather?.main.temp)}°C`}
+                    {`Weather: ${Math.round(weather.main.temp)}°C`}
                   </Text>
                 </View>
               ) : (
