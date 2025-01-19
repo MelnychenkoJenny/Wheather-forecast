@@ -8,6 +8,7 @@ module.exports = {
         alias: {
           "@components": "./src/components",
           "@env": "./types/env.d.ts",
+          "@navigation": ["./src/navigation"],
           "@screens": "./src/screens",
           "@src": "./src",
         },
