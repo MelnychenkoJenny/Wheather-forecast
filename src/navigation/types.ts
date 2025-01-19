@@ -12,5 +12,5 @@ export type SearchScreenRouteProp = RouteProp<
 
 export type RootStackParamList = {
   StartScreen: undefined;
-  SearchScreen: { latitude: number; longitude: number };
+  SearchScreen: { city?: string; latitude?: number; longitude?: number };
 };
