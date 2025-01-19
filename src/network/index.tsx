@@ -52,19 +52,19 @@ export const fetchDailyWeather = async (
   }
 };
 
-export const fetchWeather = async (cityName: string) => {
+export const fetchWeather = async (lat: number, lng: number) => {
   try {
-    const geoResponse = await axios.get(
-      `${BASE_URL_MAP}address=${cityName}&key=${MAP_API_KEY}`,
-    );
-    const { lat, lng } = geoResponse.data.results[0].geometry.location;
+    // const geoResponse = await axios.get(
+    //   `${BASE_URL_MAP}address=${cityName}&key=${MAP_API_KEY}`,
+    // );
+    // const { lat, lng } = geoResponse.data.results[0].geometry.location;
 
     const { data } = await axios.get(
       // eslint-disable-next-line max-len
       `${BASE_URL_WEATHER}forecast?lat=${lat}&lon=${lng}&appid=${WEATHER_API_KEY}&units=metric`,
     );
 
-    return data;
+    return data.list;
   } catch (error) {
     console.error('Error fetching weather:', error);
   }

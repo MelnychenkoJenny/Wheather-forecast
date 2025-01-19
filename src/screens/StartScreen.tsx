@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Alert, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
+import { useNavigation } from '@react-navigation/native';
 import MapView, {
   Callout,
   LongPressEvent,
@@ -9,12 +10,16 @@ import MapView, {
 } from 'react-native-maps';
 
 import { SafeView, StaticText } from '@components';
+import { NavigationProps } from '@navigation';
+import { initialRegion } from '@src/constants';
 import { fetchCityName, fetchDailyWeather } from '@src/network';
 import { colors } from '@src/styles';
 
 import { MarkerType, WeatherResponse } from './types';
 
 export const StartScreen = () => {
+  const navigation = useNavigation<NavigationProps>();
+
   const [marker, setMarker] = useState<MarkerType>(null);
   const [city, setCity] = useState<string | null>(null);
   const [weather, setWeather] = useState<WeatherResponse | null>(null);
@@ -38,16 +43,8 @@ export const StartScreen = () => {
     setWeather(weatherData);
   };
 
-  const handleCalloutPress = () => {
-    Alert.alert('Callout Pressed', 'You clicked on the tooltip!');
-  };
-
-  const initialRegion = {
-    latitude: 48.3794,
-    longitude: 31.1656,
-    latitudeDelta: 5,
-    longitudeDelta: 5,
-  };
+  const handleCalloutPress = () =>
+    marker && navigation.navigate('SearchScreen', marker);
 
   return (
     <SafeView>
