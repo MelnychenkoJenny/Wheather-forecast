@@ -15,7 +15,16 @@ export const TabItemBlock: FC<TabItemBlockPropsType> = ({
   const navigation = useNavigation<NavigationProps>();
   const route = useRoute();
 
-  const onPress = () => navigation.navigate(screenName);
+  const onPress = () => {
+    if (screenName === 'SearchScreen') {
+      navigation.navigate({
+        name: 'SearchScreen',
+        params: {},
+      });
+    } else {
+      navigation.navigate(screenName);
+    }
+  };
 
   const activeScreen = route.name === screenName;
 

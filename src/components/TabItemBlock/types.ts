@@ -1,4 +1,6 @@
+import { RootStackParamList } from '@navigation';
+
 export interface TabItemBlockPropsType {
   label: string;
-  screenName: 'StartScreen' | 'SearchScreen';
+  screenName: keyof RootStackParamList;
 }
