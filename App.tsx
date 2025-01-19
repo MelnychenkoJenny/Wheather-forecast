@@ -1,17 +1,7 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, Text } from 'react-native';
 
-const App = (): React.JSX.Element => (
-  <SafeAreaView style={safeViewStyle}>
-    <Text>{'This is start screen. YuuuuuHuuuuu 🎉💖😎'}</Text>
-  </SafeAreaView>
-);
+import { RootStack } from './src/navigation';
 
-const { safeViewStyle } = StyleSheet.create({
-  safeViewStyle: {
-    flex: 1,
-    height: '100%',
-  },
-});
+const App = () => <RootStack />;
 
 export default App;
