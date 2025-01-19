@@ -2,23 +2,24 @@ import axios from 'axios';
 
 import {
   BASE_URL_MAP,
+  BASE_URL_MAP_PLACE,
   BASE_URL_WEATHER,
   MAP_API_KEY,
   WEATHER_API_KEY,
 } from '@src/constants';
 
-import { AddressComponent, WeatherResponse } from '@src/screens/types';
+import { AddressComponent } from '@src/screens/types';
 
 export const fetchCityName = async (
   latitude: number,
   longitude: number,
 ): Promise<string | null> => {
   try {
-    const response = await axios.get(
+    const { data } = await axios.get(
       `${BASE_URL_MAP}latlng=${latitude},${longitude}&key=${MAP_API_KEY}`,
     );
 
-    const addressComponents = response.data.results[0]?.address_components;
+    const addressComponents = data.results[0]?.address_components;
 
     const cityName = addressComponents?.find((component: AddressComponent) =>
       component.types.includes('locality'),
@@ -35,30 +36,34 @@ export const fetchCityName = async (
   }
 };
 
-export const fetchDailyWeather = async (
-  latitude: number,
-  longitude: number,
-): Promise<WeatherResponse | null> => {
+export const fetchCityCoordinate = async (city: string) => {
   try {
     const { data } = await axios.get(
-      // eslint-disable-next-line max-len
-      `${BASE_URL_WEATHER}weather?lat=${latitude}&lon=${longitude}&appid=${WEATHER_API_KEY}&units=metric`,
+      `${BASE_URL_MAP}address=${city}&key=${MAP_API_KEY}`,
     );
 
-    return data;
+    const location = data.results[0]?.geometry.location;
+
+    return location;
   } catch (error) {
-    console.error('Error fetching weather:', error);
-    return null;
+    console.error('Error fetching city coordinates:', error);
   }
 };
 
-export const fetchWeather = async (lat: number, lng: number) => {
+export const fetchCitySuggestions = async (query: string) => {
   try {
-    // const geoResponse = await axios.get(
-    //   `${BASE_URL_MAP}address=${cityName}&key=${MAP_API_KEY}`,
-    // );
-    // const { lat, lng } = geoResponse.data.results[0].geometry.location;
+    const { data } = await axios.get(
+      `${BASE_URL_MAP_PLACE}${query}&key=${MAP_API_KEY}`,
+    );
 
+    return data.predictions;
+  } catch (error) {
+    console.error('Error fetching city suggestions:', error);
+  }
+};
+
+export const fetchWeather = async (lat?: number, lng?: number) => {
+  try {
     const { data } = await axios.get(
       // eslint-disable-next-line max-len
       `${BASE_URL_WEATHER}forecast?lat=${lat}&lon=${lng}&appid=${WEATHER_API_KEY}&units=metric`,
