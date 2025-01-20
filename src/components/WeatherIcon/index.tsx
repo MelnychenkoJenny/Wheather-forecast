@@ -12,6 +12,6 @@ export const WeatherIcon: FC<WeatherIconPropsType> = ({ code }) => (
     width={5}
     resizeMode={'stretch'}
     source={code && allWeathers[code]}
-    style={{ aspectRatio: 1.1, width: 100, tintColor: colors.accent }}
+    style={{ aspectRatio: 1.1, width: 70, tintColor: colors.accent }}
   />
 );

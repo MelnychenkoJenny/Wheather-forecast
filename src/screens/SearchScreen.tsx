@@ -51,6 +51,9 @@ export const SearchScreen: FC<{
 
   const getWeatherByCity = async () => {
     setCitySuggestions([]);
+
+    if (!city) return;
+
     const cityCoordinate = await fetchCityCoordinate(city);
 
     if (cityCoordinate) {
@@ -68,7 +71,7 @@ export const SearchScreen: FC<{
     setCity(query);
     setError('');
 
-    if (query.length > 2) {
+    if (query.length > 1) {
       const citySuggestionsResponse = await fetchCitySuggestions(query);
       setCitySuggestions(citySuggestionsResponse);
     } else {
@@ -246,7 +249,7 @@ const {
     gap: 10,
     justifyContent: 'space-between',
     marginBottom: 10,
-    padding: 15,
+    padding: 10,
     shadowColor: colors.defaultDark,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,

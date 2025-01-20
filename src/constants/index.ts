@@ -18,6 +18,6 @@ export const contents = {
   errorMessage:
     "We couldn't find the weather for the city you entered. Please check the city name and try again. 😉",
   instruction:
-    'Start entering the name of the city or country, select the desired one from the drop-down list, and press the 🔎 button.',
+    'Start entering the name of the city or country, at least two letters (English), select the desired one from the drop-down list and press the 🔎 button.',
   placeholder: 'Type city name...',
 };
